@@ -50,7 +50,7 @@ var onError = function() {
   console.log('onError!');
 };
 
-navigator.geolocation.getCurrentPosition(onGpsSuccess, onError);
+var gpsWatchId = navigator.geolocation.watchPosition(onGpsSuccess, onError, { enableHighAccuracy: true });
 
 var onGpsSuccess = function(position) {
   gpsText.text = 'Latitude: '       + position.coords.latitude          + '\n' +
