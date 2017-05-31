@@ -38,8 +38,7 @@ var gpsText = new tabris.TextView({
 }).appendTo(contentContainer)
 
 var options = {frequency: 100};  // Update every 100ms
-var watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-var onSuccess = function(acceleration) {
+var onAccelSuccess = function(acceleration) {
   acceleratorText.text = 'Acceleration X: ' + acceleration.x + '\n' +
                   'Acceleration Y: ' + acceleration.y + '\n' +
                   'Acceleration Z: ' + acceleration.z + '\n' +
@@ -49,8 +48,6 @@ var onSuccess = function(acceleration) {
 var onError = function() {
   console.log('onError!');
 };
-
-var gpsWatchId = navigator.geolocation.watchPosition(onGpsSuccess, onError, { enableHighAccuracy: true });
 
 var onGpsSuccess = function(position) {
   gpsText.text = 'Latitude: '       + position.coords.latitude          + '\n' +
@@ -62,3 +59,7 @@ var onGpsSuccess = function(position) {
               'Speed: '             + position.coords.speed             + '\n' +
               'Timestamp: '         + position.timestamp                + '\n';
     };
+var watchID = navigator.accelerometer.watchAcceleration(onAccelSuccess, onError, options);
+
+
+var gpsWatchId = navigator.geolocation.watchPosition(onGpsSuccess, onError, { enableHighAccuracy: true });
