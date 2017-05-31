@@ -12,13 +12,10 @@ var contentContainer = new tabris.ScrollView({
 }).appendTo(mainPage);
 
 [
-  './modules/SharingPage',
-  './modules/ToastPage',
+  './modules/SharingPage', 
   './modules/MotionPage',
   './modules/NetworkPage',
   './modules/CameraPage',
-  './modules/BarcodeScannerPage',
-  './modules/ActionSheetPage'
 ].forEach(function(page) {
   addPageSelector(require(page).create().page);
 });
@@ -31,3 +28,20 @@ function addPageSelector(page) {
     page.appendTo(navigationView);
   }).appendTo(contentContainer);
 }
+
+  var textView = new tabris.TextView({
+    top: ['prev()', 20], left: 20, right: 20
+  }).appendTo(contentContainer);
+
+var options = {frequency: 100};  // Update every 100ms
+var watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+var onSuccess = function(acceleration) {
+  textView.text = 'Acceleration X: ' + acceleration.x + '\n' +
+                  'Acceleration Y: ' + acceleration.y + '\n' +
+                  'Acceleration Z: ' + acceleration.z + '\n' +
+                  'Timestamp: '      + acceleration.timestamp + '\n';
+};
+
+var onError = function() {
+  console.log('onError!');
+};
