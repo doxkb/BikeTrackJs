@@ -29,14 +29,18 @@ function addPageSelector(page) {
   }).appendTo(contentContainer);
 }
 
-  var textView = new tabris.TextView({
+var acceleratorText = new tabris.TextView({
     top: ['prev()', 20], left: 20, right: 20
   }).appendTo(contentContainer);
+
+var gpsText = new tabris.TextView({
+  top: ['prev()',20], left:20, right:20
+}).appendTo(contentContainer)
 
 var options = {frequency: 100};  // Update every 100ms
 var watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
 var onSuccess = function(acceleration) {
-  textView.text = 'Acceleration X: ' + acceleration.x + '\n' +
+  acceleratorText.text = 'Acceleration X: ' + acceleration.x + '\n' +
                   'Acceleration Y: ' + acceleration.y + '\n' +
                   'Acceleration Z: ' + acceleration.z + '\n' +
                   'Timestamp: '      + acceleration.timestamp + '\n';
@@ -45,3 +49,16 @@ var onSuccess = function(acceleration) {
 var onError = function() {
   console.log('onError!');
 };
+
+navigator.geolocation.getCurrentPosition(onGpsSuccess, onError);
+
+var onGpsSuccess = function(position) {
+  gpsText.text = 'Latitude: '       + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n';
+    };
