@@ -18,7 +18,6 @@ var contentContainer = new tabris.ScrollView({
   './modules/NetworkPage',
   './modules/CameraPage',
   './modules/BarcodeScannerPage',
-  './modules/MediaPage',
   './modules/ActionSheetPage'
 ].forEach(function(page) {
   addPageSelector(require(page).create().page);

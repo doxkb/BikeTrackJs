@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="my.first.app" version="1.0.0">
-  <name>HelloWorld</name>
+  <name>BikeTrack</name>
   <description>
-    A sample Tabris.js application.
+    Application to track motorcycle rides.
   </description>
   <author email="dox_88@hotmail.com" href="https://dominicbeauchamp.com">
-    Tabris.js Team
+    Dominic Beauchamp
   </author>
   <plugin name="cordova-plugin-camera" spec="2.4.1" />
   <plugin name="cordova-plugin-dialogs" spec="1.3.3" />
