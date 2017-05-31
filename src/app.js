@@ -66,4 +66,4 @@ var onGpsSuccess = function(position) {
     };
 var watchID = navigator.accelerometer.watchAcceleration(onAccelSuccess, onError, options);
 
-var gpsWatchId = navigator.geolocation.watchPosition(onGpsSuccess, onError, { enableHighAccuracy: true, timeout: 5000, maximumAge: 3000 });
+var gpsWatchId = navigator.geolocation.watchPosition(onGpsSuccess, onError, { enableHighAccuracy: false, timeout: 5000, maximumAge: 3000 });
