@@ -64,6 +64,25 @@ var onGpsSuccess = function(position) {
               'Speed: '             + position.coords.speed             + '\n' +
               'Timestamp: '         + position.timestamp                + '\n';
     };
+
 var watchID = navigator.accelerometer.watchAcceleration(onAccelSuccess, onError, options);
 
-var gpsWatchId = cordova.plugins.locationServices.geolocation.watchPosition(onGpsSuccess, onError, { enableHighAccuracy: false, timeout: 5000, maximumAge: 3000 });
+var platform = tabris.device.get("platform")
+var watchPositionFunc;
+var watchPositionOptions;
+
+if (platform == "Android"){
+  watchPositionOptions = { 
+    maximumAge: 3000,
+    timeout: 5000,
+    enableHighAccuracy: true, 
+    priority: LocationServices.priorities.PRIORITY_HIGH_ACCURACY, 
+    interval: 1000, fastInterval: 100 };
+  watchPositionFunc = cordova.plugins.locationServices.geolocation.watchPosition;
+}
+else{
+  watchPositionFunc = navigator.geolocation.watchPosition;
+  watchPositionOptions = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
+}
+
+var watchPositionId = watchPositionFunc(onGpsSuccess, onGpsError, watchPositionOptions);
