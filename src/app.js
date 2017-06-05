@@ -61,7 +61,7 @@ var onGpsSuccess = function(position) {
               'Accuracy: '          + position.coords.accuracy          + '\n' +
               'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
               'Heading: '           + position.coords.heading           + '\n' +
-              'Speed: '             + position.coords.speed             + '\n' +
+              'Speed: '             + (position.coords.speed * 3.6)             + '\n' +
               'Timestamp: '         + position.timestamp                + '\n';
     };
 
