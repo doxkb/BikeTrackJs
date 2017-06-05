@@ -4,34 +4,22 @@ var navigationView = new tabris.NavigationView({
 }).appendTo(tabris.ui.contentView);
 
 var mainPage = new tabris.Page({
-  title: 'Cordova Examples'
+  title: 'Bike Track'
 }).appendTo(navigationView);
 
 var contentContainer = new tabris.ScrollView({
   left: 0, top: 0, right: 0, bottom: 0
 }).appendTo(mainPage);
 
-[
-  './modules/SharingPage', 
-  './modules/MotionPage',
-  './modules/NetworkPage',
-  './modules/CameraPage',
-].forEach(function(page) {
-  addPageSelector(require(page).create().page);
-});
-
-function addPageSelector(page) {
-  new tabris.Button({
-    left: 16, top: ['prev()', 16], right: 16,
-    text: page.title
-  }).on('select', function() {
-    page.appendTo(navigationView);
-  }).appendTo(contentContainer);
-}
-
 var acceleratorText = new tabris.TextView({
     top: ['prev()', 20], left: 20, right: 20
   }).appendTo(contentContainer);
+
+var map = new esmaps.Map({
+  left: 0, right: 0, top: ['prev()', 20], bottom: 0
+}).on("ready", function() {
+
+}).appendTo(page); 
 
 var gpsText = new tabris.TextView({
   top: ['prev()',20], left:20, right:20
@@ -55,19 +43,20 @@ var onGpsError = function(error){
 }
 
 var onGpsSuccess = function(position) {
-  gpsText.text = 'Latitude: '       + position.coords.latitude          + '\n' +
-              'Longitude: '         + position.coords.longitude         + '\n' +
-              'Altitude: '          + position.coords.altitude          + '\n' +
-              'Accuracy: '          + position.coords.accuracy          + '\n' +
-              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-              'Heading: '           + position.coords.heading           + '\n' +
-              'Speed: '             + (position.coords.speed * 3.6)             + '\n' +
-              'Timestamp: '         + position.timestamp                + '\n';
+  var pos = [position.coords.latitude, position.coords.longitude];
+
+  var marker =  new esmaps.Marker({position: pos})
+  map.addMarker(marker)
+
+  map.moveToPosition(pos, 2000);
+  gpsText.text = 'Heading: '           + position.coords.heading           + '\n' +
+                'Speed: '             + (position.coords.speed * 3.6)             + '\n';
     };
 
 var watchID = navigator.accelerometer.watchAcceleration(onAccelSuccess, onError, options);
 
 var platform = tabris.device.get("platform")
+
 var watchPositionFunc;
 var watchPositionOptions;
 
@@ -76,7 +65,7 @@ if (platform == "Android"){
     maximumAge: 3000,
     timeout: 5000,
     enableHighAccuracy: true, 
-    priority: LocationServices.priorities.PRIORITY_HIGH_ACCURACY, 
+    priority: cordova.plugins.locationServices.priorities.PRIORITY_HIGH_ACCURACY, 
     interval: 1000, fastInterval: 100 };
   watchPositionFunc = cordova.plugins.locationServices.geolocation.watchPosition;
 }

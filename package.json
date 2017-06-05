@@ -1,7 +1,7 @@
 {
-  "title": "Cordova Demo",
-  "description": "Demonstrates using cordova plug-ins in Tabris.js",
-  "category": "Cordova",
+  "title": "Bike Track",
+  "description": "Tracking application for motorcycle",
+  "category": "Motorcycle",
   "main": "src/app.js",
   "dependencies": {
     "tabris": "2.0.0-rc1"
